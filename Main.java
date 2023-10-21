@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.util.Scanner;
+
 class Main {
     public static void main(String[] args) {
         // 1. Soru
@@ -10,6 +13,8 @@ class Main {
         System.out.println("a");
         primeXNum.deneme();
         diceApp.dice();
+
+        nubmerGuesser.randomGuesser();
     }
 }
 
@@ -40,6 +45,32 @@ class nubmerGuesser {
     /* 「AÇIKLAMA」
 
     */
+    public static int randomNumGenerator(int min, int max) {
+        int randomNum = (int)Math.floor(Math.random() * (max - min + 1) + min);
+        return randomNum;
+    }
+
+    public static void randomGuesser(){
+        Scanner scanner = new Scanner(System.in);
+
+        int min = 1, max = 100;
+        int guessCount = 20;
+        int randomNum = randomNumGenerator(min, max);
+
+        System.out.println("Sayı bilme yarışmasına hoşgeldiniz!\nSizin için 1 ile 100 arasında bir sayı tahmin edelim." + randomNum);
+        System.out.println("Ben sayımı buldum, ilk tahmininizi alayım.");
+        String userGuess = scanner.nextLine();
+        int userNum = Integer. parseInt(userGuess);
+
+        try {
+            System.out.println("Tahmininiz: " + userNum);
+            if (userNum == randomNum) System.out.println("Doğru! Tebrikler");
+            else System.out.println("Yanlış! Tekrar deneyin");
+        } catch (Exception e) {
+            System.out.println("Sadece sayı giriniz!");
+        }
+        //String calculatorNmbrs = JOptionPane.showInputDialog(null, "İşlem yapmak istediğiniz 2 sayıyı aralarında boşluk olacak şekilde girin", "Hesap Makinesi",JOptionPane.WARNING_MESSAGE);
+    }
 }
 
 class conditionedNum {
