@@ -10,11 +10,10 @@ class Main {
         /* 「AÇIKLAMA」
 
         */
-        System.out.println("a");
-        primeXNum.deneme();
-        diceApp.dice();
 
-        nubmerGuesser.randomGuesser();
+        //conditionedNum.conditionedMain();
+        //diceApp.dice();
+        //nubmerGuesser.randomGuesser();
     }
 }
 
@@ -28,11 +27,33 @@ class diceApp {
 
     */
     public static void dice() {
-        int min = 1, max = 6;
-        int diceNum1 = (int)Math.floor(Math.random() * (max - min + 1) + min);
-        int diceNum2 = (int)Math.floor(Math.random() * (max - min + 1) + min);
+        ImageIcon icon = new ImageIcon(diceApp.class.getResource("/img/dice.gif"));
+        String windowTitle = "Çift Zar Simülasyonu 2023", windowLabel = "╔═══════════════════════════╗\n║ ÇİFT ZAR SİMÜLASYONU 2023 ║\n╚═══════════════════════════╝\n";
+        JOptionPane.showMessageDialog(null, windowLabel+ "Zar atmak için \"OK\" butonuna basın.", windowTitle, JOptionPane.INFORMATION_MESSAGE, icon);
 
-        System.out.println("İlk zar: " + diceNum1 + ". İkinci zar: " + diceNum2);
+        int diceNum1 = randomNumGenerator(), diceNum2 = randomNumGenerator();
+        ImageIcon dice1Icon = diceImg(diceNum1), dice2Icon = diceImg(diceNum2);
+
+        JOptionPane.showMessageDialog(null, windowLabel + "Zar 1 atıldı ve sonuç: " + diceNum1, windowTitle, JOptionPane.INFORMATION_MESSAGE, dice1Icon);
+        JOptionPane.showMessageDialog(null, windowLabel + "Zar 2 atıldı ve sonuç: " + diceNum2, windowTitle, JOptionPane.INFORMATION_MESSAGE, dice2Icon);
+    }
+
+    public static int randomNumGenerator() {
+        int min = 1, max = 6;
+        return (int)Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    public static ImageIcon diceImg(int diceNum) {
+        ImageIcon diceIcon = new ImageIcon("");
+        switch (diceNum) {
+            case 1 -> diceIcon = new ImageIcon("img/dice-1.png");
+            case 2 -> diceIcon = new ImageIcon("img/dice-2.png");
+            case 3 -> diceIcon = new ImageIcon("img/dice-3.png");
+            case 4 -> diceIcon = new ImageIcon("img/dice-4.png");
+            case 5 -> diceIcon = new ImageIcon("img/dice-5.png");
+            case 6 -> diceIcon = new ImageIcon("img/dice-6.png");
+        }
+        return diceIcon;
     }
 }
 
@@ -103,7 +124,6 @@ class nubmerGuesser {
             else outcomeText = "TAHMİN HAKKIN TÜKENDİ! Oyun bitti...";
             int playAgain = JOptionPane.showConfirmDialog(null, outcomeText + "\nRastgele sayıyı " + randomNum + " olarak seçmiştim." + "\nTekrar oynamak istiyor musunuz?",windowTitle , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(playAgain == JOptionPane.NO_OPTION) flag = true;
-            else guessCount = 20;
         }
     }
 }
@@ -124,9 +144,27 @@ class conditionedNum {
     /* 「AÇIKLAMA」
 
     */
+    public static void conditionedMain() {
+        int num = 100;
+        while (num < 1000) {
+            int hundred = (num - num % 100) / 100, ten = ((num - hundred * 100) - (num - hundred * 100) % 10) / 10, one = (num - hundred * 100 - ten * 10), reverseNum = one * 100 + ten * 10 + hundred;
+            boolean flag = false;
+            while (!flag) {
+                if (reverseNum > num && isPrime(num) && isPrime(reverseNum) && isPrime(hundred * 10 + ten) && isPrime(ten * 10 + one) && isPrime(one * 10 + ten) && isPrime(ten * 10 + hundred)) System.out.println(num);
+                flag = true;
+            } num++;
+        }
+    }
+
+    public static boolean isPrime(int n)
+    {
+        for (int i = 2; i < n; i++)
+        {   if(n % i == 0) return false;
+        }   return true;
+    }
 }
 
-class primeXNum {
+class primeXMethod {
     // 5. Soru
     /* 「SORU」
         Aşağıda açıklanan isPrimeX isimli metodu yazınız:
