@@ -51,25 +51,60 @@ class nubmerGuesser {
     }
 
     public static void randomGuesser(){
-        Scanner scanner = new Scanner(System.in);
+        int min = 1, max = 100, guessCount = 0;
+        boolean flag = false;
 
-        int min = 1, max = 100;
-        int guessCount = 20;
-        int randomNum = randomNumGenerator(min, max);
+        while (!flag) {
+            int randomNum = randomNumGenerator(min, max), userNum = 0;
+            boolean enter = false;
+            String outcomeText =  "", feedbackText = "", windowTitle = "║ SAYI BİLMECE ║", windowOpener = "╔══════════════╗\n║  SAYI BİLMECE  ║\n╚══════════════╝";
 
-        System.out.println("Sayı bilme yarışmasına hoşgeldiniz!\nSizin için 1 ile 100 arasında bir sayı tahmin edelim." + randomNum);
-        System.out.println("Ben sayımı buldum, ilk tahmininizi alayım.");
-        String userGuess = scanner.nextLine();
-        int userNum = Integer. parseInt(userGuess);
+            JOptionPane.showMessageDialog(null, windowOpener + "\nSayı bilme yarışmasına hoşgeldiniz!\nSizin için 1 ile 100 arasında bir sayı tahmin edelim.\nBen sayımı buldum, ilk tahmininizi alayım.");
 
-        try {
-            System.out.println("Tahmininiz: " + userNum);
-            if (userNum == randomNum) System.out.println("Doğru! Tebrikler");
-            else System.out.println("Yanlış! Tekrar deneyin");
-        } catch (Exception e) {
-            System.out.println("Sadece sayı giriniz!");
+            String[] difficulties = { "Kolay", "Orta", "Zor", "Nihai Zorluk"};
+            int difficultyOption = JOptionPane.showOptionDialog(null, "Zorluk seçiniz",windowTitle , JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, difficulties, difficulties[0]);
+            switch (difficultyOption) {
+                case 0 -> guessCount = 20;
+                case 1 -> guessCount = 15;
+                case 2 -> guessCount = 10;
+                case 3 -> guessCount = 3;
+            }
+
+            while (!enter) {
+                try {
+                    //userNum = Integer.parseInt(scanner.nextLine());
+                    String userNumS = JOptionPane.showInputDialog(null, windowOpener + "\nİlk tahmininiz\n(Tahmin hakkınız: " + guessCount + ")",windowTitle ,JOptionPane.WARNING_MESSAGE);
+                    userNum = Integer.parseInt(userNumS);
+                    enter = true;
+                    guessCount--;
+                } catch (Exception e) {
+                    System.out.println("Sadece sayı giriniz!");
+                }
+            }
+            while (userNum != randomNum && guessCount > 0) {
+                if (userNum < randomNum) feedbackText = "Tahmininiz çok küçük! Tekrar deneyin.";
+                else feedbackText = "Tahmininiz çok büyük! Tekrar deneyin.";
+                enter = false;
+                while (!enter) {
+                    try {
+                        //userNum = Integer.parseInt(scanner.nextLine());
+                        String userNumS = JOptionPane.showInputDialog(null, windowOpener + "\n" + feedbackText + "\n(Kalan tahmin hakkınız: " + guessCount + ")",windowTitle ,JOptionPane.WARNING_MESSAGE);
+                        userNum = Integer.parseInt(userNumS);
+                        enter = true;
+                        guessCount--;
+                    } catch (Exception e) {
+                        System.out.println("Sadece sayı giriniz!");
+                    }
+                }
+            }
+
+            if (guessCount > 0 && difficultyOption == 3) outcomeText = "NİHAİ TAHMİN!";
+            else if (guessCount > 0) outcomeText = "DOĞRU TAHMİN!";
+            else outcomeText = "TAHMİN HAKKIN TÜKENDİ! Oyun bitti...";
+            int playAgain = JOptionPane.showConfirmDialog(null, outcomeText + "\nRastgele sayıyı " + randomNum + " olarak seçmiştim." + "\nTekrar oynamak istiyor musunuz?",windowTitle , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(playAgain == JOptionPane.NO_OPTION) flag = true;
+            else guessCount = 20;
         }
-        //String calculatorNmbrs = JOptionPane.showInputDialog(null, "İşlem yapmak istediğiniz 2 sayıyı aralarında boşluk olacak şekilde girin", "Hesap Makinesi",JOptionPane.WARNING_MESSAGE);
     }
 }
 
