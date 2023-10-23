@@ -1,4 +1,4 @@
-# JAVA-IBP-HAFTA2
+# JAVA-IBP-HAFTA3
 
 **Akdeniz Üniversitesi - Mühendislik Fakültesi - Elektrik Elektronik Mühendisliği**
 **İleri Bilgisayar Programlama (2023 - 2024) 3. Hafta Ödev Soruları**
