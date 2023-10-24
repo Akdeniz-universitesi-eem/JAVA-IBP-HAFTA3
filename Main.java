@@ -50,22 +50,18 @@ class diceApp {
         "randomNumGenerator" fonksiyonu ile iki zar için de ayrı rastgele sayı çekilmektedir.
         * İkinci pencerede ilk zarın sonucu ve gelen sayıya göre zar resmi gösterilmektedir, resim "diceImg" fonksiyonundaki switch-case yapısıyla belirlenmektedir.
         * Üçüncü pencerede ikinci zarın sonuçları önce pencerede olduğu gibi gösterilecektir.
+        * Rastgele sayı nubmerGuesser sınıfının altındaki "randomNumGenerator" fonksiyonu tarafından üretilir.
     */
     public static void dice() {
         ImageIcon icon = new ImageIcon(diceApp.class.getResource("/img/dice.gif"));
         String windowTitle = "Çift Zar Simülasyonu 2023", windowLabel = "╔═══════════════════════════╗\n║ ÇİFT ZAR SİMÜLASYONU 2023 ║\n╚═══════════════════════════╝\n";
         JOptionPane.showMessageDialog(null, windowLabel+ "Zar atmak için \"OK\" butonuna basın.", windowTitle, JOptionPane.INFORMATION_MESSAGE, icon);
 
-        int diceNum1 = randomNumGenerator(), diceNum2 = randomNumGenerator();
+        int diceNum1 = nubmerGuesser.randomNumGenerator(1, 6), diceNum2 = nubmerGuesser.randomNumGenerator(1, 6);
         ImageIcon dice1Icon = diceImg(diceNum1), dice2Icon = diceImg(diceNum2);
 
         JOptionPane.showMessageDialog(null, windowLabel + "Zar 1 atıldı ve sonuç: " + diceNum1, windowTitle, JOptionPane.INFORMATION_MESSAGE, dice1Icon);
         JOptionPane.showMessageDialog(null, windowLabel + "Zar 2 atıldı ve sonuç: " + diceNum2, windowTitle, JOptionPane.INFORMATION_MESSAGE, dice2Icon);
-    }
-
-    public static int randomNumGenerator() {
-        int min = 1, max = 6;
-        return (int)Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     public static ImageIcon diceImg(int diceNum) {
